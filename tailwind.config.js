@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         'background': '#0B0B0B',
-        'accent': '#D4AF37',
+        'accent': '#F97316', // A vibrant orange
       },
       fontFamily: {
         'playfair': ['"Playfair Display"', 'serif'],
