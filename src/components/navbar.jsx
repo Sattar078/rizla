@@ -21,7 +21,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center gap-2 md:gap-4">
         {/* Logo */}
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <a href="#" className="font-playfair text-2xl sm:text-3xl font-bold tracking-wider">
             RIZLA
           </a>
