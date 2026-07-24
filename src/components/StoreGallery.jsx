@@ -4,32 +4,43 @@ import { collections } from '../data/products';
 
 const StoreGallery = () => {
   return (
-    <section className="w-full bg-background py-16 sm:py-20 px-4 sm:px-6">
-      <div className="container mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
-          <motion.h2
+    <section className="w-full px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-12 text-center sm:mb-16">
+          <br />
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-4"
+            className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-accent"
           >
-            Elevate Your Look with Our Trendsetting Collection
+            Signature looks
+          </motion.p>
+          <br />
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="mb-4 font-playfair text-3xl font-bold text-white sm:text-4xl lg:text-5xl"
+          >
+            Elevate your look with our trendsetting collection
           </motion.h2>
+          <br />
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="font-poppins text-gray-300 max-w-2xl mx-auto text-base sm:text-lg"
+            className="mx-auto text-base text-gray-300 sm:text-lg"
           >
-            Discover the latest fashion trends and enhance your style with our unique and trendsetting collection.
+            Discover modern essentials and bold statement pieces designed to define your everyday presence.
           </motion.p>
+          <br />
         </div>
 
-        {/* Collections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12">
+        <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-3">
           {collections.map((collection, index) => (
             <motion.div
               key={collection.id}
@@ -37,19 +48,14 @@ const StoreGallery = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
-              className="group relative h-64 sm:h-72 rounded-xl overflow-hidden cursor-pointer"
+              className="group relative h-72 overflow-hidden rounded-[1.5rem] border border-white/10 shadow-2xl shadow-black/20 sm:h-80"
             >
-              {/* Background Image */}
               <img
                 src={collection.image}
                 alt={collection.name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-500" />
-
-              {/* Content */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -57,10 +63,10 @@ const StoreGallery = () => {
                   transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }}
                   viewport={{ once: true }}
                 >
-                  <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-white mb-2">
+                  <h3 className="mb-2 font-playfair text-2xl font-bold text-white sm:text-3xl">
                     {collection.name}
                   </h3>
-                  <p className="font-poppins text-gray-100 text-sm sm:text-base line-clamp-2 mb-4">
+                  <p className="mb-4 text-sm text-gray-100 sm:text-base">
                     {collection.description}
                   </p>
                 </motion.div>
@@ -68,9 +74,12 @@ const StoreGallery = () => {
             </motion.div>
           ))}
         </div>
+        <br />
 
-        {/* CTA Button */}
         <div className="flex justify-center">
+          <br />
+          <br />
+          <br />
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -78,11 +87,12 @@ const StoreGallery = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.5 }}
             viewport={{ once: true }}
-            className="bg-accent text-background font-montserrat font-bold px-8 sm:px-12 py-3.5 sm:py-4 rounded-full hover:bg-white hover:text-background transition-all duration-300 shadow-lg hover:shadow-xl uppercase tracking-wider text-sm sm:text-base"
+            className="flex items-center justify-center rounded-full bg-accent px-8 py-3.5 font-montserrat text-sm font-bold uppercase tracking-[0.25em] text-background shadow-lg shadow-accent/20 transition-all duration-300 hover:bg-green-600 hover:text-black sm:px-12 sm:py-4"
           >
             Explore Our Collection
           </motion.button>
         </div>
+        <br />
       </div>
     </section>
   );

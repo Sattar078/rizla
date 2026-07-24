@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap');
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
 * {
   margin: 0;
@@ -8,8 +8,32 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #0B0B0B;
-  color: #ffffff;
+  background: radial-gradient(circle at top, white, transparent 28%), #8b8989;
+  color: #000000;
   font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(34, 197, 94, 0.35);
+  color: white;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

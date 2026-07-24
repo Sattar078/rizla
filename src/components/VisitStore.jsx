@@ -3,59 +3,61 @@ import { motion } from 'framer-motion';
 
 const VisitStore = () => {
   return (
-    <section className="w-full bg-background py-16 sm:py-24 px-4 sm:px-6">
-      <div className="container mx-auto">
-        {/* Promotional Banner */}
+    <section className="w-full px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="relative h-96 sm:h-[500px] rounded-2xl overflow-hidden group cursor-pointer"
+          className="group relative h-[28rem] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30 sm:h-[32rem]"
         >
-          {/* Background Image */}
           <img
-            src="https://via.placeholder.com/1200x600?text=Grab+Exciting+Deals"
+            src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1400&q=80"
             alt="Special Promo"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/30" />
 
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-black/50 group-hover:bg-black/55 transition-all duration-500" />
-
-          {/* Content */}
-          <div className="absolute inset-0 flex flex-col justify-center items-center px-6 sm:px-12 text-center z-10">
-            {/* Main Heading */}
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center sm:px-12">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-4 max-w-3xl"
+              className="mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-accent"
             >
-              Grab Exciting Deals and Special Promos Today, Don't Miss Out!
+              Limited time offer
+            </motion.p>
+            <br />
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="mb-4 max-w-3xl font-playfair text-3xl font-bold text-white sm:text-4xl lg:text-5xl"
+            >
+              Grab exciting deals and special promos before they are gone.
             </motion.h2>
-
-            {/* Subheading */}
+            <br />
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="font-poppins text-gray-100 max-w-2xl mb-8 text-base sm:text-lg"
+              className="mb-8 max-w-2xl text-base text-gray-100 sm:text-lg"
             >
-              Take advantage of today's special promotions with a variety of attractive offers such as discounts and exclusive offers. Get it soon before it runs out!
+              Take advantage of a curated selection of seasonal discounts and exclusive offers designed to refresh your look.
             </motion.p>
-
-            {/* CTA Button */}
+            <br />
             <motion.button
-              whileHover={{ scale: 1.08, boxShadow: '0 20px 40px rgba(212, 175, 55, 0.3)' }}
+              whileHover={{ scale: 1.08, boxShadow: '0 20px 40px rgba(34, 197, 94, 0.3)' }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
               viewport={{ once: true }}
-              className="bg-accent text-background font-montserrat font-bold px-10 sm:px-14 py-4 sm:py-5 rounded-full hover:bg-white hover:text-background transition-all duration-300 shadow-xl uppercase tracking-wider text-base sm:text-lg"
+              className="flex items-center justify-center rounded-full bg-accent px-10 py-4 font-montserrat text-base font-bold uppercase tracking-[0.25em] text-background shadow-xl transition-all duration-300 hover:bg-green-600 hover:text-black sm:px-14 sm:py-5"
             >
               Grab Now
             </motion.button>

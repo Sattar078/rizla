@@ -53,7 +53,7 @@ const ProductCard = ({ product }) => {
 
       {/* Quick Add to Cart Button (appears on hover) */}
       <div className="absolute bottom-0 left-0 w-full translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
-        <button className="w-full bg-accent text-background font-montserrat font-bold uppercase text-sm py-3">
+        <button className="w-full bg-accent text-background font-montserrat font-bold uppercase text-sm py-3 flex items-center justify-center">
           Add to Bag
         </button>
       </div>

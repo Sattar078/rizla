@@ -15,52 +15,48 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${
-        scrolled ? 'py-4 bg-black/50 backdrop-blur-xl shadow-lg' : 'py-6 bg-transparent'
+      className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ease-in-out ${
+        scrolled ? 'bg-black/70 py-4 shadow-lg shadow-black/20 backdrop-blur-xl' : 'bg-transparent py-6'
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center gap-2 md:gap-4">
-        {/* Logo */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <div className="shrink-0">
-          <a href="#" className="font-playfair text-2xl sm:text-3xl font-bold tracking-wider">
+          <a href="#" className="font-playfair text-2xl font-bold tracking-[0.3em] text-accent sm:text-3xl">
             RIZLA
           </a>
         </div>
 
-        {/* Location */}
-        <div className="hidden lg:flex items-center gap-2 text-sm text-gray-300">
+        <div className="hidden items-center gap-3 text-sm text-gray-300 lg:flex">
           <FiMapPin />
-          <span>Our Boutique</span>
+          <a href="#" className="transition-colors hover:text-accent">
+            Nalasupara, Mumbai
+          </a>
         </div>
 
-        {/* Search Box */}
-        <div className="flex-1 max-w-md hidden lg:block">
-          <div className="relative">
+        <div className="hidden flex-1 max-w-md lg:block">
+          <div className="relative mx-3">
             <input
               type="text"
-              placeholder="Search for collections, brands..."
-              className="w-full bg-white/10 border border-white/20 rounded-full py-2 px-6 text-sm placeholder-gray-400 focus:outline-none focus:border-accent transition-colors"
+              placeholder="Search collections, brands..."
+              className="w-full rounded-full border border-white/15 bg-white/10 py-3 pl-5 pr-12 text-sm text-white placeholder-gray-400 transition-colors focus:border-accent focus:outline-none"
             />
-            <FiSearch className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400" />
+            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-accent">
+              <FiSearch />
+            </button>
           </div>
         </div>
 
-        {/* Actions (like, cart) */}
-        <div className="flex items-center gap-x-5">
-          <button className="hover:text-accent transition-colors lg:hidden" aria-label="Search">
+        <div className="flex items-center gap-5 sm:gap-6">
+          <button className="transition-colors hover:text-accent lg:hidden" aria-label="Search">
             <FiSearch size={20} />
           </button>
-          <button className="hover:text-accent transition-colors" aria-label="Wishlist">
+          <button className="transition-colors hover:text-accent" aria-label="Wishlist">
             <FiHeart size={20} />
           </button>
-          <button className="hover:text-accent transition-colors" aria-label="Shopping Bag">
+          <button className="transition-colors hover:text-accent" aria-label="Shopping Bag">
             <FiShoppingBag size={20} />
           </button>
-        </div>
-
-        {/* Login/Signup */}
-        <div className="hidden sm:flex items-center gap-x-2">
-          <button className="flex items-center gap-2 font-montserrat text-sm uppercase tracking-widest px-4 py-2 hover:text-accent transition-colors">
+          <button className="hidden items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-2 font-montserrat text-sm uppercase tracking-[0.25em] transition-colors hover:border-accent hover:text-accent sm:flex">
             <FiUser />
             <span>Login</span>
           </button>
