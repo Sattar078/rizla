@@ -22,8 +22,9 @@ const FeaturedProducts = ({ selectedCategory }) => {
   };
 
   return (
-    <section className="w-full px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="collection">
+    <section >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="mb-10 flex flex-col gap-3 text-center md:text-left">
         <br />
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent">Featured Picks</p>
@@ -70,7 +71,7 @@ const FeaturedProducts = ({ selectedCategory }) => {
                     whileHover={{ opacity: 1 }}
                     className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 backdrop-blur-sm"
                   >
-                    <button className="flex items-center justify-center rounded-full bg-accent px-6 py-2.5 font-montserrat text-sm font-bold uppercase tracking-[0.2em] text-background transition-all duration-300 hover:bg-white hover:text-background">
+                    <button className="flex items-center justify-center rounded-full bg-accent px-8 py-3 font-montserrat text-sm font-bold uppercase tracking-[0.2em] text-background transition-all duration-300 hover:bg-white hover:text-background">
                       Quick View
                     </button>
                   </motion.div>
@@ -124,6 +125,7 @@ const FeaturedProducts = ({ selectedCategory }) => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 

@@ -4,6 +4,7 @@ import { collections } from '../data/products';
 
 const StoreGallery = () => {
   return (
+    <div className="Gallery">
     <section className="w-full px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center sm:mb-16">
@@ -95,6 +96,7 @@ const StoreGallery = () => {
         <br />
       </div>
     </section>
+    </div>
   );
 };
 

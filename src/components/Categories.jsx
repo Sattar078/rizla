@@ -14,13 +14,14 @@ const Categories = ({ onCategoryChange }) => {
   };
 
   return (
+    <div className="category">
     <section className="w-full px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-7xl rounded-[2rem] border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/20 backdrop-blur md:p-10 lg:p-12">
         <div className="mb-8 flex flex-col gap-3 text-center md:flex-row md:items-end md:justify-between md:text-left">
           <div>
             <br />
             <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-accent">Browse by vibe</p><br />
-            <h2 className="font-playfair text-3xl font-bold text-white sm:text-4xl">Curated collections for every mood</h2>
+            <h2 className="font-playfair text-3xl font-bold text-white sm:text-4xl"><span className='mood'> Curated collections for every mood</span></h2>
           </div>
           <br />
           <p className="max-w-xl text-sm text-gray-300 sm:text-base">
@@ -48,6 +49,7 @@ const Categories = ({ onCategoryChange }) => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 

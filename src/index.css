@@ -37,3 +37,37 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+nav{
+ padding-left: 3.5rem;
+ padding-top: 0.5rem;
+}
+.category{
+  padding-top: 4rem;
+  padding-left: 6.5rem;
+  padding-right: 6.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column
+  
+}
+.mood{
+  padding: 2rem;
+}
+button{
+  padding:.5rem;
+}
+.collection{
+  padding-left: 6.5rem;
+}
+.Gallery{
+    padding-left: 6.5rem;
+}
+.store{
+  padding-left: 6.5rem;
+  padding-bottom:3rem ;
+}
+.foot{
+   padding-left: 6.5rem;
+}

@@ -51,7 +51,9 @@ const Footer = () => {
   };
 
   return (
+    
     <footer className="w-full border-t border-white/10 bg-black/90">
+      <div className="foot">
       <br />
       <br />
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
@@ -158,7 +160,9 @@ const Footer = () => {
           </motion.div>
         </motion.div>
       </div>
+    </div>
     </footer>
+  
   );
 };
 

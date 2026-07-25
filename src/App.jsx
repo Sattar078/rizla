@@ -17,6 +17,7 @@ const App = () => {
   return (
     <div className="min-h-screen bg-background text-white">
       <Navbar />
+      <div className="full-home">
       <main className="overflow-hidden">
         <Hero />
         <Categories onCategoryChange={handleCategoryChange} />
@@ -24,6 +25,7 @@ const App = () => {
         <StoreGallery />
         <VisitStore />
       </main>
+      </div>
       <Footer />
     </div>
   );
