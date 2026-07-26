@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiSearch, FiShoppingBag, FiMapPin, FiUser, FiHeart } from 'react-icons/fi';
+import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  const { itemCount } = useCart();
+  const { count: wishlistCount } = useWishlist();
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <nav
@@ -21,22 +34,24 @@ const Navbar = () => {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <div className="shrink-0">
-          <a href="#" className="font-playfair text-2xl font-bold tracking-[0.3em] text-accent sm:text-3xl">
+          <Link to="/" className="font-playfair text-2xl font-bold tracking-[0.3em] text-accent sm:text-3xl">
             RIZLA
-          </a>
+          </Link>
         </div>
 
         <div className="hidden items-center gap-3 text-sm text-gray-300 lg:flex">
           <FiMapPin />
-          <a href="#" className="transition-colors hover:text-accent">
+          <Link to="/contact" className="transition-colors hover:text-accent">
             Nalasupara, Mumbai
-          </a>
+          </Link>
         </div>
 
-        <div className="hidden flex-1 max-w-md lg:block">
+        <form onSubmit={handleSearch} className="hidden flex-1 max-w-md lg:block">
           <div className="relative mx-3">
             <input
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search collections, brands..."
               className="w-full rounded-full border border-white/15 bg-white/10 py-3 pl-5 pr-12 text-sm text-white placeholder-gray-400 transition-colors focus:border-accent focus:outline-none"
             />
@@ -44,22 +59,49 @@ const Navbar = () => {
               <FiSearch />
             </button>
           </div>
-        </div>
+        </form>
 
         <div className="flex items-center gap-5 sm:gap-6">
-          <button className="transition-colors hover:text-accent lg:hidden" aria-label="Search">
+          <button
+            onClick={() => navigate(`/shop${searchQuery ? `?q=${encodeURIComponent(searchQuery)}` : ''}`)}
+            className="transition-colors hover:text-accent lg:hidden"
+            aria-label="Search"
+          >
             <FiSearch size={20} />
           </button>
-          <button className="transition-colors hover:text-accent" aria-label="Wishlist">
+          <Link to="/wishlist" className="relative transition-colors hover:text-accent" aria-label="Wishlist">
             <FiHeart size={20} />
-          </button>
-          <button className="transition-colors hover:text-accent" aria-label="Shopping Bag">
+            {wishlistCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-background">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
+          <Link to="/cart" className="relative transition-colors hover:text-accent" aria-label="Shopping Bag">
             <FiShoppingBag size={20} />
-          </button>
-          <button className="hidden items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-2 font-montserrat text-sm uppercase tracking-[0.25em] transition-colors hover:border-accent hover:text-accent sm:flex">
-            <FiUser />
-            <span>Login</span>
-          </button>
+            {itemCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-background">
+                {itemCount}
+              </span>
+            )}
+          </Link>
+          {isAuthenticated ? (
+            <Link
+              to="/account"
+              className="hidden items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-2 font-montserrat text-sm uppercase tracking-[0.25em] transition-colors hover:border-accent hover:text-accent sm:flex"
+            >
+              <FiUser />
+              <span>{user.name.split(' ')[0]}</span>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="hidden items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-2 font-montserrat text-sm uppercase tracking-[0.25em] transition-colors hover:border-accent hover:text-accent sm:flex"
+            >
+              <FiUser />
+              <span>Login</span>
+            </Link>
+          )}
         </div>
       </div>
     </nav>

@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     gsap.fromTo(
       '.hero-title',
@@ -20,6 +23,10 @@ const Hero = () => {
       { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out', delay: 0.7 }
     );
   }, []);
+
+  const scrollToProducts = () => {
+    document.querySelector('.collection')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <section className="relative min-h-screen overflow-hidden pt-24 sm:pt-28">
@@ -69,19 +76,27 @@ const Hero = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: 'backOut', delay: 0.7 }}
         >
-          <button className="hero-button flex place-items-center justify-center rounded-md  px-8 py-3.5 font-montserrat text-sm font-bold uppercase tracking-[0.25em] text-background shadow-lg shadow-accent/20 transition-all duration-300 hover:-translate-y-1 hover:bg-green-500 hover:text-black sm:px-10 sm:py-3">
+          <button
+            onClick={() => navigate('/shop')}
+            className="hero-button flex place-items-center justify-center rounded-md px-8 py-3.5 font-montserrat text-sm font-bold uppercase tracking-[0.25em] text-background shadow-lg shadow-accent/20 transition-all duration-300 hover:-translate-y-1 hover:bg-green-500 hover:text-black sm:px-10 sm:py-3"
+          >
             Shop Now
           </button>
-          <button className="hero-button flex items-center justify-center rounded-full border border-accent/100 px-8 py-3.5 font-montserrat text-sm font-bold uppercase tracking-[0.25em] text-accent backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-black sm:px-10 sm:py-4">
+          <button
+            onClick={() => navigate('/collections')}
+            className="hero-button flex items-center justify-center rounded-full border border-accent/100 px-8 py-3.5 font-montserrat text-sm font-bold uppercase tracking-[0.25em] text-accent backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-black sm:px-10 sm:py-4"
+          >
             Explore Collections
           </button>
         </motion.div>
       </div>
 
-      <motion.div
+      <motion.button
+        onClick={scrollToProducts}
         className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2"
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
+        aria-label="Scroll to products"
       >
         <svg
           className="h-6 w-6 text-white/70 transition-colors hover:text-accent"
@@ -91,7 +106,7 @@ const Hero = () => {
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
-      </motion.div>
+      </motion.button>
     </section>
   );
 };
