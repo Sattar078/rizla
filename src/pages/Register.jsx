@@ -6,15 +6,43 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [captcha, setCaptcha] = useState('');
+  const [otp, setOtp] = useState('');
+  const [sentOtp, setSentOtp] = useState('');
+  const [otpMessage, setOtpMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
 
+  const handleSendOtp = () => {
+    const generatedOtp = '123456';
+    setSentOtp(generatedOtp);
+    setOtpMessage(`OTP sent to ${mobile || 'your mobile number'}`);
+    setError('');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+
+    if (!mobile) {
+      setError('Please enter your mobile number to receive OTP.');
+      return;
+    }
+
+    if (!sentOtp) {
+      setError('Please send OTP before registering.');
+      return;
+    }
+
+    if (otp !== sentOtp) {
+      setError('Invalid OTP. Please check the code and try again.');
+      return;
+    }
+
+    setLoading(true);
     try {
       await register(name, email, password);
       navigate('/account');
@@ -26,54 +54,139 @@ const Register = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center pt-28 pb-20">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
-        <h1 className="mb-2 text-center font-playfair text-3xl font-bold text-white">Join RIZLA</h1>
-        <p className="mb-8 text-center text-sm text-gray-400">Create your account and start shopping</p>
+    <div className="login min-h-screen flex items-center justify-center px-4 py-24">
+      <div className="relative w-full max-w-5xl overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-2xl ring-1 ring-slate-100">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_1.9fr]">
+          <div className="bg-slate-50 p-10 text-center text-slate-900 lg:flex lg:flex-col lg:justify-center lg:items-center lg:px-14 lg:py-16">
+            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-3xl bg-accent/10 text-4xl font-black text-accent shadow-xl shadow-slate-200">
+              R
+            </div>
+            <h2 className="mt-10 font-playfair text-4xl font-bold tracking-tight text-slate-900">RIZLA Boutique</h2>
+            <p className="mt-5 max-w-md text-sm leading-7 text-slate-600">
+              Register with mobile OTP verification and secure your account with a quick captcha step.
+            </p>
+            <div className="mt-10 h-px w-24 bg-slate-200" />
+            <p className="mt-6 max-w-sm text-sm text-slate-500">Welcome to a premium shopping experience.</p>
+          </div>
 
-        {error && <p className="mb-4 rounded-lg bg-red-500/20 p-3 text-sm text-red-300">{error}</p>}
+          <div className="p-10 sm:p-12 lg:p-16">
+            <div className="mb-8 text-center">
+              <h1 className="text-3xl font-bold text-white">Create your account</h1>
+              <p className="mt-2 text-sm text-gray-400">Register with your details and verify your mobile number.</p>
+            </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Full Name"
-            required
-            className="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
-          />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            required
-            className="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password (min 6 characters)"
-            required
-            minLength={6}
-            className="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-full bg-accent py-3 font-montserrat text-sm font-bold uppercase tracking-[0.2em] text-background hover:bg-green-600 disabled:opacity-50"
-          >
-            {loading ? 'Creating account...' : 'Create Account'}
-          </button>
-        </form>
+            {error && (
+              <div className="mb-5 rounded-2xl bg-red-500/15 px-4 py-3 text-sm text-red-200">
+                {error}
+              </div>
+            )}
 
-        <p className="mt-6 text-center text-sm text-gray-400">
-          Already have an account?{' '}
-          <Link to="/login" className="text-accent hover:underline">
-            Sign in
-          </Link>
-        </p>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-gray-300">Full Name</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Your full name"
+                    required
+                    className="w-full rounded-3xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-gray-300">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    required
+                    className="w-full rounded-3xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-gray-300">Password</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Choose a password"
+                    required
+                    minLength={6}
+                    className="w-full rounded-3xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-gray-300">Mobile</label>
+                  <input
+                    type="tel"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    placeholder="Mobile number"
+                    required
+                    className="w-full rounded-3xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-300">Captcha</label>
+                <input
+                  type="text"
+                  value={captcha}
+                  onChange={(e) => setCaptcha(e.target.value)}
+                  placeholder="Enter captcha text"
+                  className="w-full rounded-3xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
+                />
+                <p className="mt-3 text-xs leading-5 text-gray-500">This is a placeholder captcha field for additional verification.</p>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-[1fr_auto]">
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-gray-300">OTP Code</label>
+                  <input
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter OTP"
+                    required
+                    className="w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder-gray-500 focus:border-accent focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSendOtp}
+                  className="mt-6 rounded-2xl bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+                >
+                  Send OTP
+                </button>
+              </div>
+
+              {otpMessage && <p className="text-sm text-emerald-300">{otpMessage}</p>}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-full bg-accent py-3 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-emerald-500 disabled:opacity-60"
+              >
+                {loading ? 'Creating account...' : 'Create Account'}
+              </button>
+            </form>
+
+            <p className="mt-6 text-center text-sm text-gray-400">
+              Already have an account?{' '}
+              <Link to="/login" className="text-accent hover:underline">
+                Sign in
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

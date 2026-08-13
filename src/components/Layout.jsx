@@ -4,7 +4,7 @@ import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 
 const Layout = () => (
-  <div className="min-h-screen bg-background text-white">
+  <div className="min-h-screen bg-background text-black">
     <Navbar />
     <Outlet />
     <Footer />

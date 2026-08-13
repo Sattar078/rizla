@@ -55,10 +55,8 @@ const Footer = () => {
   };
 
   return (
-    <footer className="w-full border-t border-white/10 bg-black/90">
+    <footer className="w-full border-t border-slate-200 bg-slate-50">
       <div className="foot">
-        <br />
-        <br />
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
           <motion.div
             initial="hidden"
@@ -69,9 +67,9 @@ const Footer = () => {
           >
             <motion.div variants={itemVariants} className="lg:col-span-2">
               <Link to="/">
-                <h3 className="mb-4 font-playfair text-2xl font-bold text-white sm:text-3xl">RIZLA</h3>
+                <h3 className="mb-4 font-playfair text-2xl font-bold text-slate-900 sm:text-3xl">RIZLA</h3>
               </Link>
-              <p className="mb-6 max-w-sm text-sm text-gray-400 sm:text-base">
+              <p className="mb-6 max-w-sm text-sm text-slate-600 sm:text-base">
                 Experience refined streetwear and premium fashion all in one elevated space.
               </p>
 

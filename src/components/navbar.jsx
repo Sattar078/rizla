@@ -28,9 +28,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ease-in-out ${
-        scrolled ? 'bg-black/70 py-4 shadow-lg shadow-black/20 backdrop-blur-xl' : 'bg-transparent py-10'
-      }`}
+      className="bg-white/95 text-slate-900 backdrop-blur-md fixed top-0 z-50 w-full transition-colors duration-300 shadow-sm"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <div className="shrink-0">
@@ -53,9 +51,9 @@ const Navbar = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search collections, brands..."
-              className="w-full rounded-full border border-white/15 bg-white/10 py-3 pl-5 pr-12 text-sm text-white placeholder-gray-400 transition-colors focus:border-accent focus:outline-none"
+              className="w-full rounded-full border border-slate-200 bg-slate-100 py-3 pl-5 pr-12 text-sm text-slate-900 placeholder-slate-500 transition-colors focus:border-accent focus:outline-none"
             />
-            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-accent">
+            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 transition-colors hover:text-accent">
               <FiSearch />
             </button>
           </div>
@@ -88,7 +86,7 @@ const Navbar = () => {
           {isAuthenticated ? (
             <Link
               to="/account"
-              className="hidden items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-2 font-montserrat text-sm uppercase tracking-[0.25em] transition-colors hover:border-accent hover:text-accent sm:flex"
+              className="hidden items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 font-montserrat text-sm uppercase tracking-[0.25em] text-slate-900 transition-colors hover:border-accent hover:text-accent sm:flex"
             >
               <FiUser />
               <span>{user.name.split(' ')[0]}</span>
@@ -96,7 +94,7 @@ const Navbar = () => {
           ) : (
             <Link
               to="/login"
-              className="hidden items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-2 font-montserrat text-sm uppercase tracking-[0.25em] transition-colors hover:border-accent hover:text-accent sm:flex"
+              className="hidden items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 font-montserrat text-sm uppercase tracking-[0.25em] text-slate-900 transition-colors hover:border-accent hover:text-accent sm:flex"
             >
               <FiUser />
               <span>Login</span>

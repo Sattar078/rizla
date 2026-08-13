@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         background: '#050505',
-        accent: '#22c55e',
+        accent: '#34D399',
         surface: '#111111',
         muted: '#9ca3af',
       },
@@ -19,5 +19,11 @@ export default {
       },
     },
   },
+    colors: {
+        background: '#0D0D0D',
+        text: '#F5F5F5',
+        accent: '#4CAF50', // A nice, vibrant green
+        accent: '#34D399', // A nice, vibrant green (Emerald 400)
+      },
   plugins: [],
 };
