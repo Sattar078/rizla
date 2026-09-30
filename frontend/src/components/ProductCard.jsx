@@ -78,10 +78,10 @@ const ProductCard = ({ product }) => {
           <p className="mt-1 text-xs text-gray-500">{product.category.name}</p>
         )}
         <div className="mt-2 flex items-center justify-between">
-          <p className="text-lg font-medium text-gray-900">${product.price?.toFixed(2)}</p>
+          <p className="text-lg font-bold text-gray-900">₹{(product.price || 0).toLocaleString('en-IN')}</p>
           {product.averageRating > 0 && (
-            <div className="flex items-center text-sm text-gray-500">
-              <span className="text-yellow-400 mr-1">★</span>
+            <div className="flex items-center text-sm font-semibold text-gray-700">
+              <span className="text-amber-400 mr-1">★</span>
               {product.averageRating?.toFixed(1)}
             </div>
           )}
@@ -91,9 +91,9 @@ const ProductCard = ({ product }) => {
         <button
           onClick={handleAddToCart}
           disabled={addToCartMutation.isPending}
-          className="w-full text-center text-sm font-medium border border-indigo-600 text-indigo-600 hover:bg-indigo-50 py-2 rounded-md transition disabled:opacity-50"
+          className="w-full text-center text-xs font-bold uppercase tracking-wider border border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-white py-2.5 rounded-full transition-colors disabled:opacity-50"
         >
-          {addToCartMutation.isPending && addToCartMutation.variables?.productId === product._id ? 'Adding...' : 'Add to Cart'}
+          {addToCartMutation.isPending && addToCartMutation.variables?.productId === product._id ? 'Adding...' : 'Add to Bag'}
         </button>
       </div>
     </Link>

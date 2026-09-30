@@ -49,7 +49,7 @@ const Login = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-6 text-center text-4xl font-black tracking-tight text-gray-900">
             Sign in to your account
           </h2>
         </div>
@@ -61,7 +61,7 @@ const Login = () => {
                 id="email"
                 type="email"
                 autoComplete="email"
-                className="relative block w-full rounded-t-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="relative block w-full rounded-t-xl border-0 py-3 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary-900 sm:text-sm sm:leading-6 font-medium bg-gray-50/50"
                 placeholder="Email address"
                 {...register('email')}
               />
@@ -73,12 +73,21 @@ const Login = () => {
                 id="password"
                 type="password"
                 autoComplete="current-password"
-                className="relative block w-full rounded-b-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="relative block w-full rounded-b-xl border-0 py-3 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary-900 sm:text-sm sm:leading-6 font-medium bg-gray-50/50"
                 placeholder="Password"
                 {...register('password')}
               />
               {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>}
             </div>
+          </div>
+
+          <div className="flex items-center justify-end">
+            <Link
+              to="/forgot-password"
+              className="text-xs font-semibold text-primary-900 hover:text-primary-700 transition-colors"
+            >
+              Forgot your password?
+            </Link>
           </div>
 
           {apiError && (
@@ -91,7 +100,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loginMutation.isPending}
-              className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50"
+              className="group relative flex w-full justify-center rounded-full bg-primary-900 py-3 px-4 text-sm font-bold text-white hover:bg-primary-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-900 disabled:opacity-50 transition-colors shadow-lg mt-8"
             >
               {loginMutation.isPending ? 'Signing in...' : 'Sign in'}
             </button>
@@ -99,7 +108,11 @@ const Login = () => {
           
           <div className="text-sm text-center">
              <span className="text-gray-600">Don't have an account? </span>
-             <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">Sign up</Link>
+             <Link to="/signup" className="font-bold text-primary-900 hover:text-primary-700">Sign up</Link>
+          </div>
+          <div className="text-xs text-center text-gray-400 mt-2">
+            <span>Admin? </span>
+            <Link to="/admin/login" className="font-semibold text-gray-600 hover:text-gray-900 underline">Access Admin Portal</Link>
           </div>
         </form>
       </div>

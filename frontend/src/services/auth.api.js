@@ -9,6 +9,14 @@ export const authApi = {
     const response = await api.post('/api/auth/login', data);
     return response.data;
   },
+  forgotPassword: async (data) => {
+    const response = await api.post('/api/auth/forgot-password', data);
+    return response.data;
+  },
+  resetPassword: async ({ token, password }) => {
+    const response = await api.post(`/api/auth/reset-password/${token}`, { password });
+    return response.data;
+  },
   changePassword: async (data) => {
     const response = await api.put('/api/auth/change-password', data);
     return response.data;

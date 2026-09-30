@@ -2,9 +2,9 @@ const validate = (schema) => {
   return (req, res, next) => {
     try {
       const validatedData = schema.parse({
-        body: req.body,
-        params: req.params,
-        query: req.query,
+        body: req.body ?? {},
+        params: req.params ?? {},
+        query: req.query ?? {},
       });
 
       req.body = validatedData.body;

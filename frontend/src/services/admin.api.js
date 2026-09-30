@@ -37,8 +37,14 @@ export const adminApi = {
     const response = await api.delete(`/api/products/${productId}`);
     return response.data;
   },
-  deleteProductImage: async ({ productId, data }) => {
-    const response = await api.delete(`/api/products/${productId}/image`, { data });
+  deleteProductImage: async ({ productId, imageId }) => {
+    const response = await api.delete(`/api/products/${productId}/images/${imageId}`);
+    return response.data;
+  },
+  uploadProductImages: async (formData) => {
+    const response = await api.post('/api/upload/products', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return response.data;
   },
   getOrders: async () => {
