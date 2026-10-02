@@ -1,4 +1,5 @@
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 
 
 const {
@@ -23,19 +24,34 @@ const {
 
 const router = express.Router();
 
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
-router.post("/signup", validate(signupSchema), signup);
+const passwordResetLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
-router.post("/login", validate(loginSchema), login);
+router.post("/signup", loginLimiter, validate(signupSchema), signup);
+
+router.post("/login", loginLimiter, validate(loginSchema), login);
 
 router.post(
   "/forgot-password",
+  passwordResetLimiter,
   validate(forgotPasswordSchema),
   forgotPassword
 );
 
 router.post(
   "/reset-password/:token",
+  passwordResetLimiter,
   validate(resetPasswordSchema),
   resetPassword
 );

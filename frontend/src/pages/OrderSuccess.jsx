@@ -18,11 +18,11 @@ const paymentStatusColors = {
 
 const OrderSuccess = () => {
   const { orderId } = useParams();
+  const { data, isLoading, isError } = useOrderById(orderId);
 
   // Guard — if no orderId in URL redirect to home
   if (!orderId) return <Navigate to="/" replace />;
 
-  const { data, isLoading, isError } = useOrderById(orderId);
   const order = data?.order;
 
   if (isLoading) {

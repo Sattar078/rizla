@@ -99,9 +99,9 @@ const forgotPassword = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "No user found with this email",
+      return res.status(200).json({
+        success: true,
+        message: "If an account exists for that email, a reset link has been sent.",
       });
     }
 
@@ -149,7 +149,7 @@ const forgotPassword = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Password reset link sent to your email",
+      message: "If an account exists for that email, a reset link has been sent.",
     });
   } catch (error) {
     console.error("Forgot password error:", error.message);

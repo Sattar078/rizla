@@ -45,7 +45,7 @@ const Checkout = () => {
             <ul className="-my-4 divide-y divide-gray-200">
               {cart.items.map((item) => (
                 <li key={item._id} className="flex items-center py-4">
-                  <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                  <div className="h-20 w-20 shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
                       src={item.product?.images?.[0]?.url || 'https://via.placeholder.com/150'}
                       alt={item.product?.name}

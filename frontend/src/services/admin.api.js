@@ -62,5 +62,9 @@ export const adminApi = {
   getDashboard: async () => {
     const response = await api.get('/api/admin/dashboard');
     return response.data;
-  }
+  },
+  broadcastNotification: async (data) => {
+    const response = await api.post('/api/notifications/broadcast', data);
+    return response.data;
+  },
 };

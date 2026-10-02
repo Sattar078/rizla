@@ -1,9 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { adminApi } from '../../services/admin.api';
+import { useNotification } from '../../context/NotificationContext';
 
 const AdminDashboard = () => {
+  const [broadcastTitle, setBroadcastTitle] = useState('');
+  const [broadcastMessage, setBroadcastMessage] = useState('');
+  const [isBroadcasting, setIsBroadcasting] = useState(false);
+  const [broadcastResult, setBroadcastResult] = useState(null);
+  const { fetchNotifications } = useNotification() || {};
+
+  const handleBroadcast = async (e, customData = null) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const title = customData?.title || broadcastTitle;
+    const message = customData?.message || broadcastMessage;
+
+    if (!title?.trim() || !message?.trim()) {
+      setBroadcastResult({ type: 'error', msg: 'Please provide both title and message.' });
+      return;
+    }
+
+    setIsBroadcasting(true);
+    setBroadcastResult(null);
+    try {
+      const response = await adminApi.broadcastNotification({
+        title: title.trim(),
+        message: message.trim(),
+      });
+      setBroadcastResult({
+        type: 'success',
+        msg: response?.message || 'Notification broadcasted to all users successfully!',
+      });
+      setBroadcastTitle('');
+      setBroadcastMessage('');
+      if (fetchNotifications) fetchNotifications();
+    } catch (err) {
+      setBroadcastResult({
+        type: 'error',
+        msg: err.response?.data?.message || err.message || 'Broadcast failed. Please check backend connection.',
+      });
+    } finally {
+      setIsBroadcasting(false);
+    }
+  };
   const {
     data: response,
     isLoading,
@@ -343,6 +383,144 @@ const AdminDashboard = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Broadcast Notification Section */}
+          <div className="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+              <div>
+                <h2 className="text-base font-semibold text-gray-900 font-display">
+                  📢 Broadcast Push & In-App Notifications
+                </h2>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Send high-priority custom alerts instantly to all registered customers with one click.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium self-start sm:self-auto border border-emerald-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Web Push & In-App Active
+              </span>
+            </div>
+
+            {/* Quick 1-Click Presets */}
+            <div className="my-4 p-3.5 bg-gray-50 rounded-xl border border-gray-200/60">
+              <span className="text-[11px] font-semibold text-gray-600 block mb-2 uppercase tracking-wider">
+                ⚡ 1-Click Notification Templates:
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  {
+                    title: '🔥 Flash Sale Alert! 30% Off Everything',
+                    message: 'Limited time flash sale is now live! Use code FLASH30 on your favorite luxury items.',
+                    label: '🔥 Flash Sale',
+                  },
+                  {
+                    title: '✨ Exclusive New Arrivals Just Dropped!',
+                    message: 'Explore our latest handcrafted festive & evening collections before they sell out.',
+                    label: '✨ New Arrivals',
+                  },
+                  {
+                    title: '🚚 Free Express Shipping Weekend',
+                    message: 'Enjoy zero delivery fees on all orders across India this entire weekend only!',
+                    label: '🚚 Free Shipping',
+                  },
+                  {
+                    title: '🎁 Special VIP Member Treat',
+                    message: 'Thank you for choosing Rizla Boutique. Enjoy an extra ₹500 off on orders above ₹2,999!',
+                    label: '🎁 VIP Treat',
+                  },
+                ].map((preset, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => {
+                      setBroadcastTitle(preset.title);
+                      setBroadcastMessage(preset.message);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white border border-gray-300 text-gray-700 hover:border-primary-800 hover:text-primary-900 hover:shadow-sm transition"
+                    title="Click to fill template"
+                  >
+                    <span>{preset.label}</span>
+                    <span className="text-[10px] text-gray-400">↳ Fill</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <form onSubmit={handleBroadcast} className="space-y-4 max-w-xl">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Notification Title
+                </label>
+                <input 
+                  type="text" 
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-primary-900 focus:ring-1 focus:ring-primary-900"
+                  placeholder="e.g., Flash Sale Alert!"
+                  value={broadcastTitle}
+                  onChange={e => setBroadcastTitle(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Notification Message
+                </label>
+                <textarea 
+                  className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-primary-900 focus:ring-1 focus:ring-primary-900"
+                  placeholder="Enter the message you want to broadcast..."
+                  rows="3"
+                  value={broadcastMessage}
+                  onChange={e => setBroadcastMessage(e.target.value)}
+                  required
+                ></textarea>
+              </div>
+
+              <div className="flex items-center gap-3 pt-1">
+                <button 
+                  type="submit" 
+                  disabled={isBroadcasting || !broadcastTitle.trim() || !broadcastMessage.trim()}
+                  className="inline-flex items-center justify-center rounded-full bg-primary-900 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-800 disabled:opacity-50 shadow-sm"
+                >
+                  {isBroadcasting ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                      </svg>
+                      Sending Broadcast...
+                    </span>
+                  ) : (
+                    '🚀 Send to All Users (1-Click)'
+                  )}
+                </button>
+
+                {(broadcastTitle || broadcastMessage) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setBroadcastTitle('');
+                      setBroadcastMessage('');
+                    }}
+                    className="text-xs text-gray-500 hover:text-gray-700 px-2 py-1"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+
+              {broadcastResult && (
+                <div
+                  className={`p-3 rounded-xl text-xs font-medium border flex items-center gap-2 ${
+                    broadcastResult.type === 'error'
+                      ? 'bg-red-50 text-red-700 border-red-200'
+                      : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                  }`}
+                >
+                  <span>{broadcastResult.type === 'error' ? '❌' : '✅'}</span>
+                  <span>{broadcastResult.msg}</span>
+                </div>
+              )}
+            </form>
           </div>
         </div>
       )}

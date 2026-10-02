@@ -1,5 +1,22 @@
 # Rizla Boutique Frontend Flow
 
+## PWA ENTRY & INSTALLATION FLOW
+
+```text
+Website Load
+↓
+Check PWA Installed
+├── YES → Normal App / No Install Popup
+└── NO → Show Install Popup
+             ├── INSTALL → Native Install Prompt
+             │                  ↓
+             │              Installed
+             │                  ↓
+             │             Hide Popup
+             │
+             └── X → Hide Popup For Current Session
+```
+
 ## USER AUTH FLOWS
 
 ### Standard Sign-in Flow

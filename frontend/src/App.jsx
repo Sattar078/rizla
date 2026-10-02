@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { NotificationProvider } from './context/NotificationContext';
 
 // Splash & Onboarding
 import SplashScreen from './components/SplashScreen';
@@ -37,7 +38,9 @@ import AdminLogin from './pages/admin/AdminLogin';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import Navbar from './components/Navbar';
+import MobileBottomNav from './components/MobileBottomNav';
 import AdminLayout from './components/AdminLayout';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -72,7 +75,7 @@ function AppContent({ initialRole }) {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 fade-in flex flex-col">
       <Navbar />
-      <main className="grow">
+      <main className="grow pb-16 md:pb-0">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
@@ -127,6 +130,8 @@ function AppContent({ initialRole }) {
           </Route>
         </Routes>
       </main>
+      
+      <MobileBottomNav />
 
       <style>{`
         .fade-in {
@@ -141,35 +146,69 @@ function AppContent({ initialRole }) {
   );
 }
 
-// ── Root App component ─────────────────────────────────────────────────────────
-function App() {
-  const [showSplash, setShowSplash] = useState(true);
+// ── AppFlow component ──────────────────────────────────────────────────────────
+// Handles Splash, Onboarding and auth-aware routing.
+function AppFlow() {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+  
+  // We use localStorage to remember if the user has seen the splash/onboarding this session
+  // But if they are logged in, we always skip them.
+  const [showSplash, setShowSplash] = useState(() => !localStorage.getItem('token') && location.pathname === '/');
   const [showOnboarding, setShowOnboarding] = useState(false);
-  // null = no initial role (direct page load / refresh)
-  // 'customer' | 'admin' = role chosen during onboarding
   const [initialRole, setInitialRole] = useState(null);
-  const [appReady, setAppReady] = useState(false);
+  const [appReady, setAppReady] = useState(() => !!localStorage.getItem('token') || location.pathname !== '/');
+
+  // If AuthContext resolves and user is logged in, skip everything
+  useEffect(() => {
+    if (!loading && user) {
+      setShowSplash(false);
+      setShowOnboarding(false);
+      setAppReady(true);
+    } else if (!loading && !user && !appReady && !showSplash && !showOnboarding) {
+      // If we finished loading, no user, and app isn't ready, show splash
+      setShowSplash(true);
+    }
+  }, [user, loading, appReady, showSplash, showOnboarding]);
 
   const handleSplashComplete = () => {
     setShowSplash(false);
     setShowOnboarding(true);
   };
 
-  // Called by Onboarding after the role selector step.
-  // role is 'customer' or 'admin'.
   const handleOnboardingComplete = (role) => {
     setInitialRole(role || 'customer');
     setShowOnboarding(false);
     setAppReady(true);
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-gray-200 border-t-primary-900 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
+      {appReady && <AppContent initialRole={initialRole} />}
+      {!showSplash && <PWAInstallPrompt />}
+    </>
+  );
+}
+
+// ── Root App component ─────────────────────────────────────────────────────────
+function App() {
   return (
     <AuthProvider>
-      <Router>
-        {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-        {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
-        {appReady && <AppContent initialRole={initialRole} />}
-      </Router>
+      <NotificationProvider>
+        <Router>
+          <AppFlow />
+        </Router>
+      </NotificationProvider>
     </AuthProvider>
   );
 }

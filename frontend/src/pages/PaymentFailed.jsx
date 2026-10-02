@@ -3,10 +3,10 @@ import { useOrderById } from '../hooks/useOrder';
 
 const PaymentFailed = () => {
   const { orderId } = useParams();
+  const { data, isLoading, isError } = useOrderById(orderId);
 
   if (!orderId) return <Navigate to="/" replace />;
 
-  const { data, isLoading, isError } = useOrderById(orderId);
   const order = data?.order;
 
   if (isLoading) {

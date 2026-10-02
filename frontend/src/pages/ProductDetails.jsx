@@ -45,6 +45,26 @@ const ProductDetails = () => {
     }
   }, [hasVariants, variants, selectedVariant]);
 
+  // Track recently visited products
+  React.useEffect(() => {
+    if (product) {
+      try {
+        const recent = JSON.parse(localStorage.getItem('recently_visited') || '[]');
+        const filtered = recent.filter(p => p._id !== product._id);
+        filtered.unshift({
+          _id: product._id,
+          name: product.name,
+          price: product.price,
+          images: product.images,
+          category: product.category,
+        });
+        localStorage.setItem('recently_visited', JSON.stringify(filtered.slice(0, 10)));
+      } catch (err) {
+        console.error('Failed to save recently visited product', err);
+      }
+    }
+  }, [product]);
+
   const currentMaxStock = hasVariants
     ? selectedVariant ? selectedVariant.stock : 0
     : 0;

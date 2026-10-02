@@ -81,4 +81,8 @@ const productSchema = new mongoose.Schema(
 
 const Product = mongoose.model("Product", productSchema);
 
+// Add indexes for common queries
+productSchema.index({ category: 1 });
+productSchema.index({ price: 1 });
+
 module.exports = Product;
